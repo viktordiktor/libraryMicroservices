@@ -54,6 +54,7 @@ public class NoteService {
         note.setReturnDate(currentDate.plus(Duration.ofDays(7)));
 
         noteRepository.save(note);
+        log.info("Note {} edited", note.getId());
         return modelMapper.map(note, NoteResponse.class);
     }
 
@@ -62,5 +63,6 @@ public class NoteService {
         if(noteOptional.isEmpty())
             throw new EntityNotFoundException();
         noteRepository.delete(noteOptional.get());
+        log.info("Note {} deleted", id);
     }
 }

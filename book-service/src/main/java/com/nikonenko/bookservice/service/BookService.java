@@ -35,7 +35,10 @@ public class BookService {
                 .uri("http://library-service/api/note/" + book.getId())
                 .retrieve()
                 .bodyToMono(Void.class)
-                .onErrorResume(WebClientResponseException.class, Mono::error)
+                .onErrorResume(throwable -> {
+                    deleteBook(book.getId());
+                    return Mono.error(throwable);
+                })
                 .block();
 
 

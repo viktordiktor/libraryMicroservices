@@ -7,10 +7,14 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
     private static final String INVALID_DATA_FORMAT_ERROR = "Invalid data format. Please provide valid data.";
     private static final String DATA_NOT_FOUND_ERROR = "Data not found!";
+
+    private static final String CONSTRAINTS_ERROR_MESSAGE = "Check constraints!";
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
@@ -27,4 +31,8 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<String> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(CONSTRAINTS_ERROR_MESSAGE);
+    }
 }
