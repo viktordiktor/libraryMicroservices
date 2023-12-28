@@ -9,7 +9,7 @@ Quick Start
     spring.datasource.url=jdbc:mysql://localhost:3306/*DB_name*
     spring.datasource.username=*DB_user*
     spring.datasource.password=*DB_password*
-
+---
 #### 3.1) Run services with the help of terminal
     cd discovery-server
     mvn spring-boot:run
