@@ -2,7 +2,7 @@
 Quick Start
 ---  
 #### 1) Clone repository
-    git clone https://github.com/viktordiktor/springReactRent.git
+    git clone https://github.com/viktordiktor/libraryMicroservices.git
 ---  
 #### 2) Configure your app
     In every service, change:
@@ -44,7 +44,7 @@ Quick Start
 ![Swagger Main Screen](./swagger1.png)
 ![Swagger Book Service](./swagger2.png)
 ---
-#### 5) Enjoy :)
+#### 5) Requests example
 All requests are secured with JWT token.
 Get access token: 
 
