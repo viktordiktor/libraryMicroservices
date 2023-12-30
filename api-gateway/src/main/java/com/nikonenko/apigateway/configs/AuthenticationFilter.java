@@ -16,14 +16,17 @@ import reactor.core.publisher.Mono;
 
 @RefreshScope
 @Component
-@RequiredArgsConstructor
 public class AuthenticationFilter implements GatewayFilter {
 
-    @Autowired
     private RouterValidator validator;
 
-    @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    public AuthenticationFilter(RouterValidator validator, JwtUtils jwtUtils) {
+        this.validator = validator;
+        this.jwtUtils = jwtUtils;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
