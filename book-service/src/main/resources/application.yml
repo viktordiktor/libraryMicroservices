@@ -1,0 +1,85 @@
+spring:
+  datasource:
+    url: ${MYSQL_JDBC_URL:jdbc:mysql://mysql-data:3306/booksDB?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false}
+    username: ${MYSQL_USERNAME:user}
+    password: ${MYSQL_PASSWORD:pass}
+  application:
+    name: book-service
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        '[format_sql]': true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+  web:
+    resources:
+      add-mappings: true
+  flyway:
+    enabled: true
+    url: jdbc:mysql://mysql-data:3306/booksDB
+    user: user
+    password: pass
+    locations: classpath:db/migration
+    baselineOnMigrate: true
+    baselineVersion: 1
+    table: flyway_schema_history_books
+
+
+server:
+  port: 0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka@discovery-server:8761/eureka
+
+openapi:
+  service:
+    title: book-service doc
+    version: 1.0.0
+    url: http://localhost:8080
+
+springdoc:
+  api-docs:
+    path: /book-service/v3/api-docs
+  swagger-ui:
+    path: /book-service/swagger-ui.html
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# Resilience4j Circuit Breaker Properties
+resilience4j:
+  retry:
+    instances:
+      library:
+        max-attempts: 3
+        wait-duration: 5s
+  timelimiter:
+    instances:
+      library:
+        timeout-duration: 3s
+  circuitbreaker:
+    instances:
+      library:
+        registerHealthIndicator: true
+        event-consumer-buffer-size: 10
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+

@@ -2,23 +2,18 @@
 version: '3.7'
 services:
 
-  # Works!
   mysql-data:
+    image: mysql:8.0
     container_name: mysql-data
-    image: mysql
     environment:
-      MYSQL_DATABASE: booksDB
-      MYSQL_ROOT_PASSWORD: Viktor1032003
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      - MYSQL_ROOT_PASSWORD=Viktor1032003
+      - MYSQL_DATABASE=booksDB
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
     volumes:
-      - ./booksDB:/var/lib/mysql
-    ports:
-      - "3308:3308"
+      - mysqldb_data:/var/lib/mysql
     restart: always
 
-
-  ## Works!
-  ## Eureka Server
   discovery-server:
     image: viktordiktor/discovery-server:latest
     container_name: discovery-server
@@ -26,8 +21,8 @@ services:
       - "8761:8761"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    restart: always
 
-  # Works!
   api-gateway:
     image: viktordiktor/api-gateway:latest
     container_name: api-gateway
@@ -38,93 +33,57 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=TRACE
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka@discovery-server:8761/eureka/
     depends_on:
       - discovery-server
     links:
       - discovery-server
+    restart: always
 
-  # Does not work!
-  ## Config-Service Docker Compose Config
-  config-service:
-    container_name: config-service
-    image: viktordiktor/config-service:latest
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka@discovery-server:8761/eureka/
-    depends_on:
-      - discovery-server
-      - api-gateway
-    links:
-      - discovery-server
-
-  # Does not work!
-  ## Book-Service Docker Compose Config
   book-service:
     container_name: book-service
     image: viktordiktor/book-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-data:3308/booksDB
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-data:3308/chat?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      - DATABASE_HOST_1=mysql-data
-      - DATABASE_HOST=localhost
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=Viktor1032003
-      - DATABASE_NAME=booksDB
-      - DATABASE_PORT=3308
     depends_on:
       - discovery-server
       - api-gateway
-      - config-service
       - mysql-data
     links:
       - discovery-server
       - mysql-data
+    restart: always
 
-  # Does not work!
-  ## Library-Service Docker Compose Config
   library-service:
     container_name: library-service
     image: viktordiktor/library-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-data:3308/booksDB
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
     depends_on:
       - discovery-server
       - api-gateway
-      - config-service
       - book-service
       - mysql-data
     links:
       - discovery-server
+    restart: always
 
 
-  # Does not work!
-  ## Authentication-Service Docker Compose Config
   authentication-service:
     container_name: authentication-service
     image: viktordiktor/authentication-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-data:3308/booksDB
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-data:3308/chat?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      - DATABASE_HOST_1=mysql-data
-      - DATABASE_HOST=localhost
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=Viktor1032003
-      - DATABASE_NAME=booksDB
-      - DATABASE_PORT=3308
     depends_on:
       - discovery-server
       - api-gateway
-      - config-service
       - mysql-data
+      - book-service
     links:
       - discovery-server
       - mysql-data
+    restart: always
+
+volumes:
+  mysqldb_data:
 
 

@@ -19,7 +19,6 @@
 		<module>book-service</module>
 		<module>discovery-server</module>
         <module>api-gateway</module>
-        <module>config-service</module>
         <module>authentication-service</module>
     </modules>
 

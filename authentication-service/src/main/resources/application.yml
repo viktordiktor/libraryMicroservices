@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: ${MYSQL_JDBC_URL:jdbc:mysql://mysql-data:3306/booksDB?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false}
+    username: ${MYSQL_USERNAME:user}
+    password: ${MYSQL_PASSWORD:pass}
+  application:
+    name: authentication-service
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        '[format_sql]': true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+  web:
+    resources:
+      add-mappings: true
+  flyway:
+    enabled: true
+    url: jdbc:mysql://mysql-data:3306/booksDB
+    user: user
+    password: pass
+    locations: classpath:db/migration
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    table: flyway_schema_history_auth
+    baselineOnMigrate: true
+
+server:
+  port: 0
+
+jwt:
+  secret: MiAVzqUXy5Tfr1kVIGpPMiAVzqUXy5Tfr1kVIGpP
+  expiration: 86400
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka@discovery-server:8761/eureka
+
+openapi:
+  service:
+    title: auth-service doc
+    version: 1.0.0
+    url: http://localhost:8080
+
+springdoc:
+  api-docs:
+    path: /auth-service/v3/api-docs
+  swagger-ui:
+    path: /auth-service/swagger-ui.html
+

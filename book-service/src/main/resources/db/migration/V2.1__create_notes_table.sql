@@ -1,4 +1,4 @@
-CREATE TABLE notes (
+CREATE TABLE IF NOT EXISTS notes (
                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                        book_id BIGINT,
                        borrowed_date DATETIME,

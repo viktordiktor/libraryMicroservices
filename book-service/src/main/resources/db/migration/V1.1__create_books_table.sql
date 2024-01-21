@@ -1,4 +1,4 @@
-CREATE TABLE books (
+CREATE TABLE IF NOT EXISTS  books (
                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
                        isbn VARCHAR(255) UNIQUE,
                        title VARCHAR(255),
