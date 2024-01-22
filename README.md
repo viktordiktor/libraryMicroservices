@@ -1,59 +1,45 @@
-# **Spring (Cloud, MVC, JPA) Microservices with Hibernate, JWT filter, MySQL DB, FlyWay, Swagger docs**
-Quick Start
----  
-#### 1) Clone repository
-    git clone https://github.com/viktordiktor/libraryMicroservices.git
----  
-#### 2) Configure your app
-    In every service, change:
-    spring.datasource.url=jdbc:mysql://localhost:3306/*DB_name*
-    spring.datasource.username=*DB_user*
-    spring.datasource.password=*DB_password*
+# Spring (Cloud, MVC, JPA) Microservices with Hibernate, JWT filter, MySQL DB, FlyWay, Swagger docs
+
 ---
-#### 3.1) Run services with the help of terminal
-    cd discovery-server
-    mvn spring-boot:run
 
-    cd config-service
-    mvn spring-boot:run
+This application utilizes a microservices approach. It is built using Spring (Cloud, MVC, Data), Hibernate, JWT filter, MySQL DB, FlyWay, documented with Swagger, containerized with Docker (Docker Compose). The application has a well-structured architecture, including an API gateway, Discovery Server, and services such as the book service, library service, and authentication service. Inter-service communication has been implemented, and the Circuit Breaker pattern has been applied.
 
-    cd api-gateway
-    mvn spring-boot:run
-
-    cd book-service
-    mvn spring-boot:run
-
-    cd authentication-service
-    mvn spring-boot:run
-
-    cd library-service
-    mvn spring-boot:run
-
-#### 3.2) Run services with the help of IntelliJ IDE
-    Order: DiscoveryServerApplication -> ConfigService -> ApiGatewayApplication  
-    -> BookServiceApplication -> AuthApplication -> LibrarySerivceApplication
-![Services launch](./services.PNG)
-
-#### 3.3) Run with the help of Docker Compose
-    Soon...
 ---
+
+## Quick Start
+#### Run app with the help of Docker Compose:
+
+    docker-compose up -d
+
+![Run application](./runApp.jpg)
+![Containers](./runApp2.jpg)
+
+#### Stop application:
+
+    docker stop $(docker ps -a -q)
+
+![Stop application](./stopApp.jpg)
+
+---
+
 #### 4) Eureka/Swagger End Points:
     Eureka endpoint: localhost:8080/eureka/web
+![Eureka Main Screen](./eureka.jpg)
+
     Swagger endpoint: localhost:8080/swagger-ui.html
-![Services launch](./services.PNG)
 ![Swagger Main Screen](./swagger1.png)
 ![Swagger Book Service](./swagger2.png)
 ---
 #### 5) Requests example
-All requests are secured with JWT token.
-Get access token: 
+Register request:
+![Register Request](./request.jpg)
 
-    POST-request - http://localhost:8080/api/auth/register
-    Body example:
-    {
-            "email": "email",
-            "password": "password"
-    }
+All requests are secured with JWT token.
+![Request with JWT](./request-jwt.jpg)
+
+---
+
+![^^](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
     
 
 
