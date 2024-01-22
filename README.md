@@ -11,31 +11,31 @@ This application utilizes a microservices approach. It is built using Spring (Cl
 
     docker-compose up -d
 
-![Run application](./runApp.jpg)
-![Containers](./runApp2.jpg)
+![Run application](./images/runApp.jpg)
+![Containers](./images/runApp2.jpg)
 
 #### Stop application:
 
     docker stop $(docker ps -a -q)
 
-![Stop application](./stopApp.jpg)
+![Stop application](./images/stopApp.jpg)
 
 ---
 
 #### 4) Eureka/Swagger End Points:
     Eureka endpoint: localhost:8080/eureka/web
-![Eureka Main Screen](./eureka.jpg)
+![Eureka Main Screen](./images/eureka.jpg)
 
     Swagger endpoint: localhost:8080/swagger-ui.html
-![Swagger Main Screen](./swagger1.png)
-![Swagger Book Service](./swagger2.png)
+![Swagger Main Screen](./images/swagger1.png)
+![Swagger Book Service](./images/swagger2.png)
 ---
 #### 5) Requests example
 Register request:
-![Register Request](./request.jpg)
+![Register Request](./images/request.jpg)
 
 All requests are secured with JWT token.
-![Request with JWT](./request-jwt.jpg)
+![Request with JWT](./images/requestJwt.jpg)
 
 ---
 
