@@ -39,7 +39,6 @@ All requests are secured with JWT token.
 
 ---
 
-![^^](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
     
 
 
