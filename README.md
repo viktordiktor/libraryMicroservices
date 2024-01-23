@@ -1,4 +1,4 @@
-# Spring (Cloud, MVC, JPA) Microservices with Hibernate, JWT filter, MySQL DB, FlyWay, Swagger docs
+# Spring (Cloud, MVC, JPA) Microservices with Hibernate, JWT filter, MySQL DB, FlyWay, Docker (Google JIB + Compose), Swagger docs
 
 ---
 
